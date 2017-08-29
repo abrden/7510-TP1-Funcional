@@ -6,7 +6,7 @@
 (defn parse-fact
   "Returns a Fact record for the given a fact string"
   [fact]
-  (let [[predicate & args] (str/split fact #"\(|,|\)")]
+  (let [[predicate & args] (str/split fact #"\(|,\ *|\)")]
     (new Fact predicate args)
     )
   )
