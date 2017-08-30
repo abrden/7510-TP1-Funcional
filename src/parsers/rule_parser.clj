@@ -7,7 +7,7 @@
 (defn parse-rule
   "Returns a Rule record for the given a rule string"
   [rule]
-  (let [[predicate & facts] (map parsers.fact-parser/parse-fact (str/split rule #"\ *:-\ *|\),\ *"))]
-    (new Rule predicate facts)
+  (let [[signature & facts] (map parsers.fact-parser/parse-fact (str/split rule #"\ *:-\ *|\),\ *"))]
+    (new Rule signature facts)
     )
   )

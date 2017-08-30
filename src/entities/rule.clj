@@ -1,3 +1,3 @@
 (ns entities.rule)
 
-(defrecord Rule [predicate facts])
+(defrecord Rule [signature facts])
