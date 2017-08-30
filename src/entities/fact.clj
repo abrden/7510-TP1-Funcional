@@ -1,3 +1,3 @@
 (ns entities.fact)
 
-(defrecord Fact [predicate args])
+(defrecord Fact [sentence predicate args])
