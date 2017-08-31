@@ -21,10 +21,14 @@
 (defn parse-file
   ""
   [fileName]
-  (group-by type
+  (let [ dbmap (group-by type
           (map dispatch-parser
                (with-open [rdr (io/reader fileName)]
                    (doall (line-seq rdr)))
                )
-          )
+          )] (new DataBase
+                      (get dbmap entities.fact.Fact)
+                      (get dbmap entities.rule.Rule)
+                      (get dbmap entities.malformation.Malformation))
+    )
   )
