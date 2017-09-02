@@ -23,7 +23,7 @@
   [fileName]
   (let [ dbmap (group-by type
           (map dispatch-parser
-               (with-open [rdr (io/reader fileName)]
+               (with-open [rdr (io/reader (io/file fileName))]
                    (doall (line-seq rdr)))
                )
           )] (new DataBase

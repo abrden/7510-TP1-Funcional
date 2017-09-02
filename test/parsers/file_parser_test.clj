@@ -2,8 +2,8 @@
   (:require [clojure.test :refer :all]
             [parsers.file-parser :refer :all]))
 
-(def FACTS_FILE "/home/agustina/Documents/tdd-tp1/test/files/facts")
-(def MALFORMED_FILE "/home/agustina/Documents/tdd-tp1/test/files/malformed")
+(def FACTS_FILE "test/files/facts.txt")
+(def MALFORMED_FILE "test/files/malformed.txt")
 
 (deftest simple-file-parse
   (testing "Tests a simple file parse"

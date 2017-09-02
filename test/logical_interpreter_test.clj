@@ -2,7 +2,7 @@
   (:require [clojure.test :refer :all]
             [logical-interpreter :refer :all]))
 
-(def FACTS_FILE "/home/agustina/Documents/tdd-tp1/test/files/facts")
+(def FACTS_FILE "test/files/facts.txt")
 
 (deftest true-fact-query
   (testing "Tests a simple true fact query"
