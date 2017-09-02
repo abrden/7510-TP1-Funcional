@@ -8,8 +8,8 @@
 
 (deftest simple-file-parse
   (testing "Tests a simple file parse"
-    (is (= (parse-file FACTS_FILE) '("man(John)" "woman(Irene)" "friends(Sherlock, John)")))))
+    (is (= (count (:facts (parse-file FACTS_FILE))) 3))))
 
 (deftest malformed-file-parse
   (testing "Tests a malformed file parse"
-           (is (= (parse-file MALFORMED_FILE) '("father(John, Rosamund)" "wife(John, Mary)" "Malformed" "man(Sherlock)" "Malformed" "Malformed")))))
+           (is (= (count (:malformations (parse-file MALFORMED_FILE))) 3))))
