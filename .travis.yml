@@ -1,6 +1,6 @@
 language: clojure
 
 notifications:
-  email: never
+  email:
     on_success: never
     on_failure: always
