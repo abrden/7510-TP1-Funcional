@@ -1,7 +1,6 @@
-(ns file-parser-test
+(ns parsers.file-parser-test
   (:require [clojure.test :refer :all]
             [parsers.file-parser :refer :all]))
-
 
 (def FACTS_FILE "/home/agustina/Documents/tdd-tp1/test/files/facts")
 (def MALFORMED_FILE "/home/agustina/Documents/tdd-tp1/test/files/malformed")

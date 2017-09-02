@@ -1,4 +1,4 @@
-(ns rule-parser-test
+(ns parsers.rule-parser-test
   (:require [clojure.test :refer :all]
             [parsers.rule-parser :refer :all]))
 
