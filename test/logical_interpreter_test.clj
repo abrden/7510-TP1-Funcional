@@ -7,3 +7,11 @@
 (deftest true-fact-query
   (testing "Tests a simple true fact query"
            (is (= (evaluate-query FACTS_FILE "man(John)") true))))
+
+(deftest false-fact-query
+  (testing "Tests a simple false fact query"
+           (is (= (evaluate-query FACTS_FILE "woman(John)") false))))
+
+(deftest empty-query
+  (testing "Tests an empty query"
+           (is (= (evaluate-query FACTS_FILE "") nil))))

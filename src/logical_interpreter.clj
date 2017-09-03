@@ -9,7 +9,7 @@
   [databaseFileName query]
   (let [database (parsers.file-parser/parse-file databaseFileName)]
     (cond
+      (= query "") nil
       (entities.database/complies-with-fact database query) true
-      (= query "") false
       :else false))
   )
