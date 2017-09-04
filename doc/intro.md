@@ -1,3 +1,3 @@
-# Introduction to funcional-template
+# Introduction to SLI
 
-TODO: write documentation
+TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)
