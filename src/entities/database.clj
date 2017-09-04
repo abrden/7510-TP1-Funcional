@@ -1,36 +1,29 @@
 (ns entities.database
-  (:require [entities.rule]))
+  (:require [entities.rule])
+  (:require [parsers.fact-parser]))
 
-(defprotocol Compliant
-  (complies-with-fact [this query])
-  (complies-with-rule [this query])
-  )
-
-(defn fact-query
-  ""
-  [database query]
-  (some (fn [fact] (= (:sentence fact) query)) (:facts database))
-  )
-
-(defn rule-query
-  ""
-  [database rule query]
-  (every? (fn [x] (fact-query database x)) (entities.rule/evaluate rule query))
+(defprotocol Queryable
+  (fact-query [this query])
+  (rule-query [this query])
   )
 
 (defn find-rule
   ""
   [database query]
-  (first (filter (fn [rule] (= (:predicate (:signature rule)) query)) (:rules database)))
+  (first (filter
+          (fn [rule] (= (:predicate (:signature rule)) (:predicate (parsers.fact-parser/parse-fact query))))
+          (:rules database)
+          ))
   )
 
 (defrecord DataBase [facts rules malformations]
-  Compliant
-  (complies-with-fact [this query]
-                      (fact-query this query))
-  (complies-with-rule [this query]
-                      (if-let [rule (find-rule this query)]
-                        (rule-query this rule query)
+  Queryable
+  (fact-query [this query]
+              (some (fn [fact] (= (:sentence fact) query)) (:facts this))
+              )
+  (rule-query [this query]
+              (if-let [rule (find-rule this query)]
+                        (every? (fn [x] (fact-query this x)) (entities.rule/evaluate rule query))
                         false)
-                      )
+              )
   )
