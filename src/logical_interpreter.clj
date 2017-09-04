@@ -29,7 +29,10 @@
 (defn query-loop
   ""
   [database]
-  (println "TODO oops")
+  (loop [input (read-line)]
+    (when-not (= "q" input)
+      (println (str "-> You entered: >>" input "<<"))
+      (recur (read-line))))
   )
 
 (defn -main
@@ -39,4 +42,5 @@
     (do (println "-> Database loaded successfully. Enter any query. Exit with 'q'.")
         (query-loop database))
     (println "-> Error: Malformed database"))
+  (println "-> Exit")
   )
