@@ -17,8 +17,26 @@
       :else false))
   )
 
+(defn create-database
+  ""
+  [databaseFileName]
+  (let [database (parsers.file-parser/parse-file databaseFileName)]
+    (if (:malformations database)
+      nil
+      database))
+  )
+
+(defn query-loop
+  ""
+  [database]
+  (println "TODO oops")
+  )
+
 (defn -main
   ""
   [databaseFileName]
-  (print databaseFileName)
+  (if-let [database (create-database databaseFileName)]
+    (do (println "-> Database loaded successfully. Enter any query. Exit with 'q'.")
+        (query-loop database))
+    (println "-> Error: Malformed database"))
   )
