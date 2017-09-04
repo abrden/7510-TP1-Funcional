@@ -17,6 +17,17 @@
       :else false))
   )
 
+(defn evaluate-query-with-db
+  "Returns true if the rules and facts in database imply query, false if not. If
+  query is invalid, returns nil"
+  [database query]
+  (cond
+    (not (re-matches #".+\(.+\)" query)) nil
+    (entities.database/fact-query database query) true
+    (entities.database/rule-query database query) true
+    :else false)
+  )
+
 (defn create-database
   ""
   [databaseFileName]
@@ -31,7 +42,7 @@
   [database]
   (loop [input (read-line)]
     (when-not (= "q" input)
-      (println (str "-> You entered: >>" input "<<"))
+      (println (str "-> " (evaluate-query-with-db database input)))
       (recur (read-line))))
   )
 
