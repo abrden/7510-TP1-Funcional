@@ -1,4 +1,4 @@
-(ns number-database-test
+(ns integration.number-database-test
   (:require [clojure.test :refer :all]
             [logical-interpreter :refer :all]))
 

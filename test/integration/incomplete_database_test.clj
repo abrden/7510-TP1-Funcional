@@ -1,4 +1,4 @@
-(ns incomplete-database-test
+(ns integration.incomplete-database-test
   (:require [clojure.test :refer :all]
             [logical-interpreter :refer :all]))
 

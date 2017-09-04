@@ -1,4 +1,4 @@
-(ns parent-database-test
+(ns integration.parent-database-test
   (:require [clojure.test :refer :all]
             [logical-interpreter :refer :all]))
 
