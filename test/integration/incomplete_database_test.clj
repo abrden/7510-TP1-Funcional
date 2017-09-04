@@ -1,11 +1,8 @@
-(ns incomplete-database-test
+(ns integration.incomplete-database-test
   (:require [clojure.test :refer :all]
             [logical-interpreter :refer :all]))
 
-(def incomplete-database "
-	varon(juan).
-	varon
-")
+(def incomplete-database "test/files/incomplete_database.txt")
 
 (deftest incomplete-database-fact-test
   (testing "varon(juan) should be nil"
