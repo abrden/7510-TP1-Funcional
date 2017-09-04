@@ -1,4 +1,5 @@
 (ns logical-interpreter
+  (:gen-class)
   (:require [entities.database])
   (:require [parsers.file-parser])
   )
@@ -14,4 +15,10 @@
       (entities.database/fact-query database query) true
       (entities.database/rule-query database query) true
       :else false))
+  )
+
+(defn -main
+  ""
+  [databaseFileName]
+  (print databaseFileName)
   )
