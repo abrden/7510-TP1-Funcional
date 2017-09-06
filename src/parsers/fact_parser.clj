@@ -7,6 +7,5 @@
   "Returns a Fact record for the given a fact string"
   [fact]
   (let [[predicate & args] (str/split fact #"\(|,\ *|\)")]
-    (new Fact fact predicate args)
-    )
+    (new Fact fact predicate args))
   )
