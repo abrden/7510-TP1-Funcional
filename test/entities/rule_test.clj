@@ -5,15 +5,15 @@
   (:import [entities.fact Fact])
   )
 
-(def consulting-detective-rule (new Rule (new Fact "consultingDetective(X)" "consultingDetective" ["X"])
-                                 [(new Fact "man(X)" "man" ["X"]) (new Fact "livesIn221BBakerStreet(X)" "livesIn221BBakerStreet" ["X"])]))
+(def consulting-detective-rule (new Rule (new Fact "consultingDetective" ["X"])
+                                 [(new Fact "man" ["X"]) (new Fact "livesIn221BBakerStreet" ["X"])]))
 
-(def daugther-rule (new Rule (new Fact "daugther(Y, X)" "daugther" ["Y", "X"])
-                     [(new Fact "woman(Y)" "woman" ["Y"]) (new Fact "father(X, Y)" "father" ["X", "Y"])]))
+(def daugther-rule (new Rule (new Fact "daugther" ["Y", "X"])
+                     [(new Fact "woman" ["Y"]) (new Fact "father" ["X", "Y"])]))
 
-(def consulting-detective-rule-query (new Fact "consultingDetective(Sherlock)" "consultingDetective" ["Sherlock"]))
+(def consulting-detective-rule-query (new Fact "consultingDetective" ["Sherlock"]))
 
-(def daugther-rule-query (new Fact "daugther(Rosamund, John)" "daugther" ["Rosamund", "John"]))
+(def daugther-rule-query (new Fact "daugther" ["Rosamund", "John"]))
 
 (deftest format-single-arg-sentence
   (testing "Tests a single argument sentence format"
@@ -34,9 +34,9 @@
 (deftest evaluate-single-arg-rule
   (testing "Tests a single argument rule evaluation"
            (is (= (evaluate consulting-detective-rule consulting-detective-rule-query)
-                  [(new Fact "" "man" ["Sherlock"]) (new Fact "" "livesIn221BBakerStreet" ["Sherlock"])]))))
+                  [(new Fact "man" ["Sherlock"]) (new Fact "livesIn221BBakerStreet" ["Sherlock"])]))))
 
 (deftest evaluate-multiple-arg-rule
   (testing "Tests a multiple argument rule evaluation"
            (is (= (evaluate daugther-rule daugther-rule-query)
-                  [(new Fact "" "woman" ["Rosamund"]) (new Fact "" "father" ["John", "Rosamund"])]))))
+                  [(new Fact "woman" ["Rosamund"]) (new Fact "father" ["John", "Rosamund"])]))))

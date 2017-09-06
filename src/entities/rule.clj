@@ -24,7 +24,6 @@
               (map
                (fn [generic-fact]
                  (new Fact
-                  ""
                   (:predicate generic-fact)
                   (map (fn [var] (get (variables-map this query) var)) (:args generic-fact)))
                  )
