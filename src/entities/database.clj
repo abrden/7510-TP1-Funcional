@@ -1,6 +1,5 @@
 (ns entities.database
-  (:require [entities.rule])
-  (:require [parsers.fact-parser]))
+  (:require [entities.rule] [parsers.fact-parser]))
 
 (defprotocol Queryable
   (fact-query [this query])

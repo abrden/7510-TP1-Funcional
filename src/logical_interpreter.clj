@@ -1,8 +1,6 @@
 (ns logical-interpreter
   (:gen-class)
-  (:require [entities.database])
-  (:require [parsers.file-parser])
-  (:require [parsers.fact-parser])
+  (:require [entities.database] [parsers.file-parser] [parsers.fact-parser])
   )
 
 (defn evaluate-query
