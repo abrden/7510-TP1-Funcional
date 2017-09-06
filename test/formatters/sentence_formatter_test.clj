@@ -4,8 +4,8 @@
 
 (deftest format-single-arg-sentence
   (testing "Tests a single argument sentence format"
-           (is (= (format-sentence "man" ["Sherlock"]) "man(Sherlock)"))))
+           (is (= (format-sentence "man" ["Sherlock"]) "man(Sherlock)."))))
 
 (deftest format-multiple-arg-sentence
   (testing "Tests a multiple argument sentence format"
-           (is (= (format-sentence "friends" ["John" "Molly" "Lestrade"]) "friends(John, Molly, Lestrade)"))))
+           (is (= (format-sentence "friends" ["John" "Molly" "Lestrade"]) "friends(John, Molly, Lestrade)."))))

@@ -23,3 +23,7 @@
 (deftest empty-query
   (testing "Tests an empty query"
     (is (= (build-db-and-evaluate-query FACTS_FILE "") nil))))
+
+(deftest query-with-dot
+  (testing "Test query with dot should be nil"
+    (is (= (build-db-and-evaluate-query FACTS_FILE "man(John).") nil))))

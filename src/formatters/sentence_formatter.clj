@@ -4,5 +4,5 @@
 (defn format-sentence
   ""
   [predicate args]
-  (str predicate "(" (str/join ", " args) ")")
+  (str predicate "(" (str/join ", " args) ").")
   )

@@ -17,3 +17,7 @@
 (deftest without-spaces-parse
   (testing "Tests args without spaces parse"
            (is (= (:args (parse-fact "friends(John,Sherlock,Molly)")) '("John", "Sherlock", "Molly")))))
+
+(deftest parse-with-dot
+  (testing "Tests a two args parse with final dot"
+    (is (= (:args (parse-fact "father(John, Rosamund).")) '("John", "Rosamund")))))
