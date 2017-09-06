@@ -1,5 +1,6 @@
 (ns entities.database
   (:require [entities.rule])
+  (:require [entities.fact])
   (:require [parsers.fact-parser]))
 
 (defprotocol Queryable
@@ -19,7 +20,7 @@
 (defrecord DataBase [facts rules malformations]
   Queryable
   (fact-query [this query]
-              (some (fn [fact] (= (:sentence fact) query)) (:facts this))
+              (some (fn [fact] (entities.fact/equivalent-to-query fact (parsers.fact-parser/parse-fact query))) (:facts this))
               )
   (rule-query [this query]
               (if-let [rule (find-rule this query)]
