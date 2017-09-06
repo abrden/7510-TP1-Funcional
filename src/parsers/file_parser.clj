@@ -13,8 +13,8 @@
   ""
   [sentence]
   (cond
-    (re-matches #".+\(.+\)\ *:-\ *.*" sentence) (parsers.rule-parser/parse-rule sentence)
-    (re-matches #".+\(.+\)" sentence) (parsers.fact-parser/parse-fact sentence)
+    (re-matches #".+\(.+\)\ *:-\ *.*\." sentence) (parsers.rule-parser/parse-rule sentence)
+    (re-matches #".+\(.+\)\." sentence) (parsers.fact-parser/parse-fact sentence)
     :else (new Malformation sentence))
   )
 

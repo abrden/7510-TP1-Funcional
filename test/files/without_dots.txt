@@ -1,0 +1,3 @@
+man(John)
+friends(Sherlock, John)
+son(X, Y) :- man(X), father(Y, X)
