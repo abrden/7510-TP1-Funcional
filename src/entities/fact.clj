@@ -6,6 +6,6 @@
 (defrecord Fact [sentence predicate args]
   Equivalent
   (equivalent-to-query [this query]
-    (= (:sentence this) (:sentence query))
+    (and (= (:predicate this) (:predicate query)) (= (:args this) (:args query)))
     )
   )
