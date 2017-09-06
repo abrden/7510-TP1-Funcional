@@ -22,32 +22,32 @@
 
 (deftest positive-find-rule-in-db
   (testing "Tests positive rule search"
-           (is (:sentence (:signature (find-rule test-database "daugther(Molly, Mr. Hooper)"))) "daugther(Y, X)")))
+           (is (:sentence (:signature (find-rule test-database (new Fact "daugther(Molly, Mr. Hooper)" "daugther" ["Molly", "Mr. Hooper"])))) "daugther(Y, X)")))
 
 (deftest negative-find-rule-in-db
   (testing "Tests negative rule search"
-           (is (= (find-rule test-database "son(Rosamund, John)") nil))))
+           (is (= (find-rule test-database (new Fact "son(Rosamund, John)" "son" ["Rosamund", "John"])) nil))))
 
 (deftest positive-fact-query
   (testing "Tests positive fact query"
-           (is (= (fact-query test-database "woman(Rosamund)") true))))
+           (is (= (fact-query test-database woman-fact) true))))
 
 (deftest negative-fact-query
   (testing "Tests negative fact query"
-           (is (= (fact-query test-database "woman(Sherlock)") nil))))
+           (is (= (fact-query test-database (new Fact "woman(Sherlock)" "woman" ["Sherlock"])) nil))))
 
 (deftest positive-rule-query-single
   (testing "Tests positive rule query with a single fact"
-    (is (= (rule-query test-database "consultingDetective(Sherlock)") true))))
+    (is (= (rule-query test-database (new Fact "consultingDetective(Sherlock)" "consultingDetective" ["Sherlock"])) true))))
 
 (deftest positive-rule-query-multiple
   (testing "Tests positive rule query"
-    (is (= (rule-query test-database "daugther(Rosamund, John)") true))))
+    (is (= (rule-query test-database (new Fact "daugther(Rosamund, John)" "daugther" ["Rosamund", "John"])) true))))
 
 (deftest negative-rule-query
   (testing "Tests negative rule query"
-           (is (= (rule-query test-database "daugther(Molly, John)") false))))
+           (is (= (rule-query test-database (new Fact "daugther(Molly, John)" "daugther" ["Molly", "John"])) false))))
 
 (deftest negative-rule-query-nonexistent-rule
   (testing "Tests negative rule query for nonexistent rule"
-           (is (= (rule-query test-database "son(Sherlock, Mr. Holmes)") false))))
+           (is (= (rule-query test-database (new Fact "son(Sherlock, Mr. Holmes)" "son" ["Sherlock", "Mr. Holmes"])) false))))

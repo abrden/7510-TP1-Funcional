@@ -1,5 +1,6 @@
 (ns entities.rule
-  (:require [parsers.fact-parser])
+  (:require [entities.fact])
+  (:import [entities.fact Fact])
   (:require [clojure.string :as str]))
 
 (defprotocol Evaluable
@@ -8,7 +9,7 @@
 (defn variables-map
   ""
   [rule query]
-  (zipmap (:args (:signature rule)) (:args (parsers.fact-parser/parse-fact query)))
+  (zipmap (:args (:signature rule)) (:args query))
   )
 
 (defn format-sentence
@@ -21,10 +22,11 @@
   Evaluable
   (evaluate [this query]
               (map
-               (fn [fact]
-                 (format-sentence
-                  (:predicate fact)
-                  (map (fn [var] (get (variables-map this query) var)) (:args fact)))
+               (fn [generic-fact]
+                 (new Fact
+                  ""
+                  (:predicate generic-fact)
+                  (map (fn [var] (get (variables-map this query) var)) (:args generic-fact)))
                  )
                (:facts this))
             )
