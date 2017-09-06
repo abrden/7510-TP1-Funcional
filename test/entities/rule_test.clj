@@ -5,32 +5,30 @@
   (:import [entities.fact Fact])
   )
 
-(def consulting-detective-rule (new Rule (new Fact "consultingDetective(X)" "consultingDetective" ["X"])
-                                 [(new Fact "man(X)" "man" ["X"]) (new Fact "livesIn221BBakerStreet(X)" "livesIn221BBakerStreet" ["X"])]))
+(def consulting-detective-rule (new Rule (new Fact "consultingDetective" ["X"])
+                                 [(new Fact "man" ["X"]) (new Fact "livesIn221BBakerStreet" ["X"])]))
 
-(def daugther-rule (new Rule (new Fact "daugther(Y, X)" "daugther" ["Y", "X"])
-                     [(new Fact "woman(Y)" "woman" ["Y"]) (new Fact "father(X, Y)" "father" ["X", "Y"])]))
+(def daugther-rule (new Rule (new Fact "daugther" ["Y", "X"])
+                     [(new Fact "woman" ["Y"]) (new Fact "father" ["X", "Y"])]))
 
-(deftest format-single-arg-sentence
-  (testing "Tests a single argument sentence format"
-           (is (= (format-sentence "man" ["Sherlock"]) "man(Sherlock)"))))
+(def consulting-detective-rule-query (new Fact "consultingDetective" ["Sherlock"]))
 
-(deftest format-multiple-arg-sentence
-  (testing "Tests a multiple argument sentence format"
-           (is (= (format-sentence "friends" ["John" "Molly" "Lestrade"]) "friends(John, Molly, Lestrade)"))))
+(def daugther-rule-query (new Fact "daugther" ["Rosamund", "John"]))
 
 (deftest varmap-single-arg
   (testing "Tests a single argument varmap"
-           (is (.equals (variables-map consulting-detective-rule "consultingDetective(Sherlock)") {"X" "Sherlock"}))))
+           (is (.equals (variables-map consulting-detective-rule consulting-detective-rule-query) {"X" "Sherlock"}))))
 
 (deftest varmap-multiple-arg
   (testing "Tests a multiple argument varmap"
-           (is (.equals (variables-map daugther-rule "daugther(Rosamund, John)") {"X" "John", "Y" "Rosamund"}))))
+           (is (.equals (variables-map daugther-rule daugther-rule-query) {"X" "John", "Y" "Rosamund"}))))
 
 (deftest evaluate-single-arg-rule
   (testing "Tests a single argument rule evaluation"
-           (is (= (evaluate consulting-detective-rule "consultingDetective(Sherlock)") ["man(Sherlock)" "livesIn221BBakerStreet(Sherlock)"]))))
+           (is (= (evaluate consulting-detective-rule consulting-detective-rule-query)
+                  [(new Fact "man" ["Sherlock"]) (new Fact "livesIn221BBakerStreet" ["Sherlock"])]))))
 
 (deftest evaluate-multiple-arg-rule
   (testing "Tests a multiple argument rule evaluation"
-           (is (= (evaluate daugther-rule "daughter(Rosamund, John)") ["woman(Rosamund)" "father(John, Rosamund)"]))))
+           (is (= (evaluate daugther-rule daugther-rule-query)
+                  [(new Fact "woman" ["Rosamund"]) (new Fact "father" ["John", "Rosamund"])]))))

@@ -2,17 +2,20 @@
   (:gen-class)
   (:require [entities.database])
   (:require [parsers.file-parser])
+  (:require [parsers.fact-parser])
   )
 
 (defn evaluate-query
   "Returns true if the rules and facts in database imply query, false if not. If
   query is invalid, returns nil"
   [database query]
-  (cond
-    (not (re-matches #".+\(.+\)" query)) nil
-    (entities.database/fact-query database query) true
-    (entities.database/rule-query database query) true
-    :else false)
+  (if (re-matches #".+\(.+\)" query)
+    (let [parsed-query (parsers.fact-parser/parse-fact query)]
+      (cond
+        (entities.database/fact-query database parsed-query) true
+        (entities.database/rule-query database parsed-query) true
+        :else false))
+    )
   )
 
 (defn build-db-and-evaluate-query
@@ -20,18 +23,14 @@
   either input can't be parsed, returns nil"
   [databaseFileName query]
   (let [database (parsers.file-parser/parse-file databaseFileName)]
-    (if (:malformations database)
-      nil
-      (evaluate-query database query)))
+    (if-not (:malformations database) (evaluate-query database query)))
   )
 
 (defn create-database
   ""
   [databaseFileName]
   (let [database (parsers.file-parser/parse-file databaseFileName)]
-    (if (:malformations database)
-      nil
-      database))
+    (if-not (:malformations database) database))
   )
 
 (defn query-loop
