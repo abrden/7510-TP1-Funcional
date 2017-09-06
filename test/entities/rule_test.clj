@@ -15,14 +15,6 @@
 
 (def daugther-rule-query (new Fact "daugther" ["Rosamund", "John"]))
 
-(deftest format-single-arg-sentence
-  (testing "Tests a single argument sentence format"
-           (is (= (format-sentence "man" ["Sherlock"]) "man(Sherlock)"))))
-
-(deftest format-multiple-arg-sentence
-  (testing "Tests a multiple argument sentence format"
-           (is (= (format-sentence "friends" ["John" "Molly" "Lestrade"]) "friends(John, Molly, Lestrade)"))))
-
 (deftest varmap-single-arg
   (testing "Tests a single argument varmap"
            (is (.equals (variables-map consulting-detective-rule consulting-detective-rule-query) {"X" "Sherlock"}))))

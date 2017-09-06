@@ -1,7 +1,6 @@
 (ns entities.rule
   (:require [entities.fact])
-  (:import [entities.fact Fact])
-  (:require [clojure.string :as str]))
+  (:import [entities.fact Fact]))
 
 (defprotocol Evaluable
   (evaluate [this query]))
@@ -10,12 +9,6 @@
   ""
   [rule query]
   (zipmap (:args (:signature rule)) (:args query))
-  )
-
-(defn format-sentence
-  ""
-  [predicate args]
-  (str predicate "(" (str/join ", " args) ")")
   )
 
 (defrecord Rule [signature facts]
