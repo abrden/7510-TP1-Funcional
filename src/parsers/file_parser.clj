@@ -1,12 +1,7 @@
 (ns parsers.file-parser
-  (:require [entities.database])
-  (:import [entities.database DataBase])
-  (:require [entities.malformation])
-  (:import [entities.malformation Malformation])
-  (:require [parsers.fact-parser])
-  (:require [parsers.rule-parser])
-  (:require [clojure.string :as str])
-  (:require [clojure.java.io :as io])
+  (:require [clojure.string :as str] [clojure.java.io :as io]
+            [entities.database] [entities.malformation] [parsers.fact-parser] [parsers.rule-parser])
+  (:import [entities.database DataBase] [entities.malformation Malformation])
   )
 
 (defn dispatch-parser

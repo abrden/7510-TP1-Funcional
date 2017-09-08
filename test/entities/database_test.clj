@@ -1,9 +1,7 @@
 (ns entities.database-test
   (:require [clojure.test :refer :all]
             [entities.database :refer :all] [entities.rule :refer :all] [entities.fact :refer :all])
-  (:import [entities.database DataBase])
-  (:import [entities.rule Rule])
-  (:import [entities.fact Fact])
+  (:import [entities.database DataBase] [entities.rule Rule] [entities.fact Fact])
   )
 
 (def consulting-detective-rule (new Rule (new Fact "consultingDetective" ["X"])

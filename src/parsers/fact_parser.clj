@@ -1,7 +1,7 @@
 (ns parsers.fact-parser
-  (:require [entities.fact])
-  (:import [entities.fact Fact])
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [entities.fact])
+  (:import [entities.fact Fact]))
 
 (defn parse-fact
   "Returns a Fact record for the given a fact string"
