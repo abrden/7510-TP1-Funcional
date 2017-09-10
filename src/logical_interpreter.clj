@@ -25,27 +25,29 @@
   )
 
 (defn create-database
-  ""
+  "Receives a string representing the database file name.
+  Returns a DataBase record. If the file is malformed, returns nil."
   [databaseFileName]
   (let [database (parsers.file-parser/parse-file databaseFileName)]
     (if-not (:malformations database) database))
   )
 
 (defn query-loop
-  ""
+  "Receives a DataBase record. Loops querying the database with the user input from stdin."
   [database]
   (loop [input (read-line)]
     (when-not (= "q" input)
-      (println (str "-> " (evaluate-query database input)))
+      (println (str "(SLI) " (evaluate-query database input)))
       (recur (read-line))))
   )
 
 (defn -main
-  ""
+  "Entry point. Receives a string representing the database file name from the command line."
   [databaseFileName]
+  (println "Simple logic interpreter (SLI)")
   (if-let [database (create-database databaseFileName)]
-    (do (println "-> Database loaded successfully. Enter any query. Exit with 'q'.")
+    (do (println "Database loaded successfully. Enter any query. Exit with 'q'.")
         (query-loop database))
-    (println "-> Error: Malformed database"))
-  (println "-> Exit")
+    (println "(SLI) Error: Malformed database"))
+  (println "(SLI) Exiting")
   )
