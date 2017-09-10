@@ -2,6 +2,17 @@
 
 A Clojure library designed to serve as a logic interpreter.
 
+## Prerequisites
+
+- JDK 1.8 or greater
+- [Leiningen](https://github.com/technomancy/leiningen)
+
+## Tests
+Run tests
+```
+$ lein test
+```
+
 ## Usage
 Clone the project
 ```
@@ -27,6 +38,12 @@ Press 'q' to exit.
 ```
 q
 (SLI) Exiting
+```
+
+Or you could run the SLI with the jar
+```
+$ lein uberjar
+$ java -jar target/tdd-tp1-0.1.0-SNAPSHOT.jar test/files/number_database.txt
 ```
 ## License
 
