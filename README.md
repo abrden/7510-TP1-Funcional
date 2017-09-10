@@ -43,7 +43,7 @@ q
 Or you could run the SLI with the jar
 ```
 $ lein uberjar
-$ java -jar target/tdd-tp1-0.1.0-SNAPSHOT.jar test/files/number_database.txt
+$ java -jar target/tdd-tp1-1.0.0-SNAPSHOT-standalone.jar test/files/number_database.txt
 ```
 ## License
 
