@@ -4,6 +4,8 @@
   (:import [entities.database DataBase] [entities.rule Rule] [entities.fact Fact])
   )
 
+; Constants
+
 (def consulting-detective-rule (new Rule (new Fact "consultingDetective" ["X"])
                                  [(new Fact "man" ["X"])]))
 
@@ -18,6 +20,8 @@
 
 (def test-database (new DataBase [woman-fact father-fact man-fact] [consulting-detective-rule daugther-rule] []))
 
+; find-rule tests
+
 (deftest positive-find-rule-in-db
   (testing "Tests positive rule search"
            (is (:predicate (:signature (find-rule test-database (new Fact "daugther" ["Molly", "Mr. Hooper"])))) "daugther")))
@@ -26,6 +30,7 @@
   (testing "Tests negative rule search"
            (is (= (find-rule test-database (new Fact "son" ["Rosamund", "John"])) nil))))
 
+; fact-query tests
 (deftest positive-fact-query
   (testing "Tests positive fact query"
            (is (= (fact-query test-database woman-fact) true))))
@@ -33,6 +38,8 @@
 (deftest negative-fact-query
   (testing "Tests negative fact query"
            (is (= (fact-query test-database (new Fact "woman" ["Sherlock"])) nil))))
+
+; rule-query tests
 
 (deftest positive-rule-query-single
   (testing "Tests positive rule query with a single fact"
@@ -46,6 +53,6 @@
   (testing "Tests negative rule query"
            (is (= (rule-query test-database (new Fact "daugther" ["Molly", "John"])) false))))
 
-(deftest negative-rule-query-nonexistent-rule
+(deftest nil-rule-query-nonexistent-rule
   (testing "Tests negative rule query for nonexistent rule"
-           (is (= (rule-query test-database (new Fact "son" ["Sherlock", "Mr. Holmes"])) false))))
+           (is (= (rule-query test-database (new Fact "son" ["Sherlock", "Mr. Holmes"])) nil))))
