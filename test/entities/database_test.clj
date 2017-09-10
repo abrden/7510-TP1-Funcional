@@ -1,53 +1,58 @@
 (ns entities.database-test
   (:require [clojure.test :refer :all]
             [entities.database :refer :all] [entities.rule :refer :all] [entities.fact :refer :all])
-  (:import [entities.database DataBase])
-  (:import [entities.rule Rule])
-  (:import [entities.fact Fact])
+  (:import [entities.database DataBase] [entities.rule Rule] [entities.fact Fact])
   )
 
-(def consulting-detective-rule (new Rule (new Fact "consultingDetective(X)" "consultingDetective" ["X"])
-                                 [(new Fact "man(X)" "man" ["X"])]))
+; Constants
 
-(def daugther-rule (new Rule (new Fact "daugther(Y, X)" "daugther" ["Y", "X"])
-                     [(new Fact "woman(Y)" "woman" ["Y"]) (new Fact "father(X, Y)" "father" ["X", "Y"])]))
+(def consulting-detective-rule (new Rule (new Fact "consultingDetective" ["X"])
+                                 [(new Fact "man" ["X"])]))
 
-(def woman-fact (new Fact "woman(Rosamund)" "woman" ["Rosamund"]))
+(def daugther-rule (new Rule (new Fact "daugther" ["Y", "X"])
+                     [(new Fact "woman" ["Y"]) (new Fact "father" ["X", "Y"])]))
 
-(def father-fact (new Fact "father(John, Rosamund)" "father" ["John", "Rosamund"]))
+(def woman-fact (new Fact "woman" ["Rosamund"]))
 
-(def man-fact (new Fact "man(Sherlock)" "man" ["Sherlock"]))
+(def father-fact (new Fact "father" ["John", "Rosamund"]))
+
+(def man-fact (new Fact "man" ["Sherlock"]))
 
 (def test-database (new DataBase [woman-fact father-fact man-fact] [consulting-detective-rule daugther-rule] []))
 
+; find-rule tests
+
 (deftest positive-find-rule-in-db
   (testing "Tests positive rule search"
-           (is (:sentence (:signature (find-rule test-database "daugther(Molly, Mr. Hooper)"))) "daugther(Y, X)")))
+           (is (:predicate (:signature (find-rule test-database (new Fact "daugther" ["Molly", "Mr. Hooper"])))) "daugther")))
 
 (deftest negative-find-rule-in-db
   (testing "Tests negative rule search"
-           (is (= (find-rule test-database "son(Rosamund, John)") nil))))
+           (is (= (find-rule test-database (new Fact "son" ["Rosamund", "John"])) nil))))
 
+; fact-query tests
 (deftest positive-fact-query
   (testing "Tests positive fact query"
-           (is (= (fact-query test-database "woman(Rosamund)") true))))
+           (is (= (fact-query test-database woman-fact) true))))
 
 (deftest negative-fact-query
   (testing "Tests negative fact query"
-           (is (= (fact-query test-database "woman(Sherlock)") nil))))
+           (is (= (fact-query test-database (new Fact "woman" ["Sherlock"])) nil))))
+
+; rule-query tests
 
 (deftest positive-rule-query-single
   (testing "Tests positive rule query with a single fact"
-    (is (= (rule-query test-database "consultingDetective(Sherlock)") true))))
+    (is (= (rule-query test-database (new Fact "consultingDetective" ["Sherlock"])) true))))
 
 (deftest positive-rule-query-multiple
   (testing "Tests positive rule query"
-    (is (= (rule-query test-database "daugther(Rosamund, John)") true))))
+    (is (= (rule-query test-database (new Fact "daugther" ["Rosamund", "John"])) true))))
 
 (deftest negative-rule-query
   (testing "Tests negative rule query"
-           (is (= (rule-query test-database "daugther(Molly, John)") false))))
+           (is (= (rule-query test-database (new Fact "daugther" ["Molly", "John"])) false))))
 
-(deftest negative-rule-query-nonexistent-rule
+(deftest nil-rule-query-nonexistent-rule
   (testing "Tests negative rule query for nonexistent rule"
-           (is (= (rule-query test-database "son(Sherlock, Mr. Holmes)") false))))
+           (is (= (rule-query test-database (new Fact "son" ["Sherlock", "Mr. Holmes"])) nil))))

@@ -1,32 +1,33 @@
 (ns entities.rule
-  (:require [parsers.fact-parser])
-  (:require [clojure.string :as str]))
+  (:require [entities.fact])
+  (:import [entities.fact Fact]))
 
 (defprotocol Evaluable
   (evaluate [this query]))
 
 (defn variables-map
-  ""
+  "Receives a Rule record and a Fact record named query.
+  Returns a map with the rule variables as keys and the correspondent constants as values.
+  For example; The rule daugther(X, Y) and query daugther(Rosamund, John) returns
+  the map {X Rosamund, Y John}"
   [rule query]
-  (zipmap (:args (:signature rule)) (:args (parsers.fact-parser/parse-fact query)))
-  )
-
-(defn format-sentence
-  ""
-  [predicate args]
-  (str predicate "(" (str/join ", " args) ")")
+  (zipmap (:args (:signature rule)) (:args query))
   )
 
 (defrecord Rule [signature facts]
   Evaluable
   (evaluate [this query]
-              (map
-               (fn [fact]
-                 (format-sentence
-                  (:predicate fact)
-                  (map (fn [var] (get (variables-map this query) var)) (:args fact)))
-                 )
-               (:facts this))
-            )
+    "Receives a Rule record and a Fact record named query.
+    Returns a sequence of new Fact records (the ones on the rule's body)
+    with their variable args replaces by the ones on the query.
+    For example; The rule daugther(X, Y) :- father(X,Y) and query daugther(Rosamund, John)
+    returns [ father(John, Rosamund) ]"
+    (map
+      (fn [generic-fact]
+        (new Fact
+             (:predicate generic-fact)
+             (map (fn [var] (get (variables-map this query) var)) (:args generic-fact))))
+      (:facts this))
+    )
   )
 

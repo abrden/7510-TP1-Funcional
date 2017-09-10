@@ -1,8 +1,7 @@
 (ns parsers.rule-parser
-  (:require [parsers.fact-parser])
-  (:require [entities.rule])
-  (:import [entities.rule Rule])
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [parsers.fact-parser] [entities.rule])
+  (:import [entities.rule Rule]))
 
 (defn parse-rule
   "Returns a Rule record for the given a rule string"
