@@ -16,7 +16,7 @@
   )
 
 (defn parse-file
-  "Receibes a string representing the database file name.
+  "Receives a string representing the database file name.
   Returns a DataBase record containing the facts, rules and malformations of the file."
   [fileName]
   (let [ dbmap (group-by type
